@@ -1,4 +1,5 @@
-use actix_web::{web, App, HttpResponse, HttpServer, Responder};
+use actix_web::{middleware, web, App, HttpResponse, HttpServer, Responder};
+use actix_files::Files;
 use dotenv::dotenv;
 use std::{env};
 use std::net::{IpAddr};
@@ -14,10 +15,12 @@ async fn main() -> std::io::Result<()> {
     let bind_addr: IpAddr = env::var("BIND_ADDR").unwrap().parse().unwrap();
     let bind_port = env::var("BIND_PORT").unwrap().parse::<u16>().unwrap();
 
-    
     HttpServer::new(|| {
         App::new()
-            .route("/", web::get().to(hello))
+            .wrap(middleware::Logger::default())
+            .route("/hello", web::get().to(hello))
+            .service(Files::new("/images", "static/images/").show_files_listing())
+            .service(Files::new("/", "./static/root/").index_file("index.html"))
     })
     .bind((bind_addr, bind_port))?
     .system_exit()
@@ -26,3 +29,4 @@ async fn main() -> std::io::Result<()> {
     .run()
     .await
 }
+
