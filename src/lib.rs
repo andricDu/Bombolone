@@ -1,2 +1,2 @@
-pub mod configs;
-pub mod handlers;
+pub mod config;
+pub mod handler;
