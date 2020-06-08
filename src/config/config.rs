@@ -10,6 +10,7 @@ pub struct AppConfig {
     pub forward_url: Url,
     pub image_root: String,
     pub web_root: String,
+    pub app_secret: String,
 }
 
 pub fn get_app_config() -> AppConfig {
@@ -23,11 +24,14 @@ pub fn get_app_config() -> AppConfig {
     let image_root: String = env::var("STATIC_IMAGE_ROOT").unwrap().parse().unwrap();
     let web_root: String = env::var("STATIC_WEB_ROOT").unwrap().parse().unwrap();
 
+    let app_secret: String = env::var("APP_SECRET").unwrap().parse().unwrap();
+
     AppConfig {
         bind_addr,
         bind_port,
         forward_url,
         image_root,
         web_root,
+        app_secret,
     }
 }
