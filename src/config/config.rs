@@ -19,7 +19,7 @@ pub fn get_app_config() -> AppConfig {
 
     let bind_addr: IpAddr = env::var("BIND_ADDR").unwrap().parse().unwrap();
     let bind_port: u16 = env::var("BIND_PORT").unwrap().parse().unwrap();
-    let domain: String = env::var("DOMAIN").unwrap_or_else(|_| "localhost".to_string());
+    let domain: String = env::var("DOMAIN").unwrap_or_else(|_| "127.0.0.1".to_string());
 
     let stream_base_url: String = env::var("STREAM_BASE_URL").unwrap().parse().unwrap();
     let forward_url = Url::parse(&stream_base_url).unwrap();

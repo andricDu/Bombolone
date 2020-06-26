@@ -1,4 +1,6 @@
+use actix_cors::Cors;
 use actix_files::Files;
+use actix_http::cookie::SameSite;
 use actix_identity::{CookieIdentityPolicy, Identity, IdentityService};
 use actix_web::client::Client;
 use actix_web::{middleware, web, App, Error, HttpResponse, HttpServer};
@@ -40,6 +42,7 @@ async fn main() -> std::io::Result<()> {
 
     HttpServer::new(move || {
         App::new()
+            .wrap(Cors::new().supports_credentials().finish())
             .data(Client::new())
             .data(config.forward_url.clone())
             .data(config.app_secret.clone())
@@ -50,6 +53,7 @@ async fn main() -> std::io::Result<()> {
                     .path("/")
                     .domain(&config.domain)
                     .max_age_time(chrono::Duration::days(365))
+                    .same_site(SameSite::None)
                     .secure(false), // this can only be true if you have https
             ))
             .service(web::resource("/login").route(web::post().to(login)))
