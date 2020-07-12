@@ -1,13 +1,20 @@
+use actix_identity::Identity;
 use actix_web::client::Client;
 use actix_web::{web, Error, HttpRequest, HttpResponse};
 use url::Url;
 
 pub async fn forward_video(
+    id: Identity,
     req: HttpRequest,
     body: web::Bytes,
     url: web::Data<Url>,
     client: web::Data<Client>,
 ) -> Result<HttpResponse, Error> {
+    // Short return
+    if !id.identity().is_some() {
+        return Ok(HttpResponse::Forbidden().finish());
+    }
+
     let mut new_url = url.get_ref().clone();
 
     new_url.set_query(req.uri().query());

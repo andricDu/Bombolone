@@ -9,13 +9,30 @@ use bombolone::handler::auth::login;
 use bombolone::handler::qrcode::qr_code;
 use bombolone::handler::video::forward_video;
 use qrcode::QrCode;
+use rustls::internal::pemfile::{certs, pkcs8_private_keys};
+use rustls::{NoClientAuth, ServerConfig};
+use std::fs::File;
+use std::io::BufReader;
 
 async fn test_auth(id: Identity) -> Result<HttpResponse, Error> {
     if id.identity().is_some() {
         Ok(HttpResponse::Ok().body("Cool"))
     } else {
-        Ok(HttpResponse::Forbidden().body("Fuck off"))
+        Ok(HttpResponse::Forbidden().body("Go Away"))
     }
+}
+
+fn build_tls_config(cert_file: &String, key_file: &String) -> ServerConfig {
+    let mut tls_config = ServerConfig::new(NoClientAuth::new());
+    let cert_file = &mut BufReader::new(File::open(cert_file).unwrap());
+    let key_file = &mut BufReader::new(File::open(key_file).unwrap());
+    let cert_chain = certs(cert_file).unwrap();
+    let mut keys = pkcs8_private_keys(key_file).unwrap();
+    tls_config
+        .set_single_cert(cert_chain, keys.remove(0))
+        .unwrap();
+
+    tls_config
 }
 
 #[actix_rt::main]
@@ -31,12 +48,15 @@ async fn main() -> std::io::Result<()> {
     let bind_addr = config.bind_addr;
     let bind_port = config.bind_port;
 
+    // load ssl keys
+    let tls_config = build_tls_config(&config.cert_file, &config.key_file);
+
     // Dump QR Code to stdout
     let code = QrCode::new(&config.app_secret).unwrap();
     let qr_string = code
         .render::<char>()
         .quiet_zone(true)
-        .module_dimensions(2, 1)
+        .module_dimensions(3, 1)
         .build();
     println!("{}", qr_string);
 
@@ -62,9 +82,7 @@ async fn main() -> std::io::Result<()> {
             .service(web::resource("/video").route(web::get().to(forward_video)))
             .service(Files::new("/", &config.web_root).index_file("index.html"))
     })
-    .bind((bind_addr, bind_port))?
-    .system_exit()
-    .bind("127.0.0.1:8088")?
+    .bind_rustls((bind_addr, bind_port), tls_config)?
     .system_exit()
     .run()
     .await

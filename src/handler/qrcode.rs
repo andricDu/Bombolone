@@ -1,8 +1,14 @@
+use actix_identity::Identity;
 use actix_web::{web, HttpResponse, Responder};
 use qrcode::render::svg;
 use qrcode::QrCode;
 
-pub async fn qr_code(secret: web::Data<String>) -> impl Responder {
+pub async fn qr_code(id: Identity, secret: web::Data<String>) -> impl Responder {
+    // Short return
+    if !id.identity().is_some() {
+        return HttpResponse::Forbidden().finish();
+    }
+
     let code = QrCode::new(secret.get_ref()).unwrap();
     let image = code
         .render()

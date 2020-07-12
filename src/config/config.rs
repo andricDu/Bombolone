@@ -8,6 +8,8 @@ pub struct AppConfig {
     pub bind_addr: IpAddr,
     pub bind_port: u16,
     pub domain: String,
+    pub cert_file: String,
+    pub key_file: String,
     pub forward_url: Url,
     pub web_root: String,
     pub app_secret: String,
@@ -20,6 +22,9 @@ pub fn get_app_config() -> AppConfig {
     let bind_addr: IpAddr = env::var("BIND_ADDR").unwrap().parse().unwrap();
     let bind_port: u16 = env::var("BIND_PORT").unwrap().parse().unwrap();
     let domain: String = env::var("DOMAIN").unwrap_or_else(|_| "127.0.0.1".to_string());
+
+    let cert_file: String = env::var("CERT_FILE").unwrap();
+    let key_file: String = env::var("KEY_FILE").unwrap();
 
     let stream_base_url: String = env::var("STREAM_BASE_URL").unwrap().parse().unwrap();
     let forward_url = Url::parse(&stream_base_url).unwrap();
@@ -34,6 +39,8 @@ pub fn get_app_config() -> AppConfig {
         bind_addr,
         bind_port,
         domain,
+        cert_file,
+        key_file,
         forward_url,
         web_root,
         app_secret,

@@ -8,12 +8,13 @@ edition = "2018"
 
 [dependencies]
 actix-http = "1.0.1"
-actix-web = { version = "2.0.0", features=["openssl"] }
+actix-web = { version = "2.0.0", features = ["rustls"] }
 actix-rt = "1.0"
 actix-cors = "0.2.0"
 actix-identity = "0.2.0"
 actix-files = "0.2.1"
 dotenv = "0.15.0"
+rustls = "0.16"
 url = "2.0"
 futures = "0.3.1"
 failure = "0.1.3"
