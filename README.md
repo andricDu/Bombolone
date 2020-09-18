@@ -8,6 +8,11 @@ Authentication is done via code that is managed in the config and displayed as a
 
 The video stream can be served by something like mjpg_streamer in http mode or something supporting either the PiCam or Video4Linux drivers depending on your target architecture. The only real requirement is that the video stream be served over HTTP that Bombolone will proxy. 
 
+### Why this way
+- Rustls instead of openssl
+- Centralized web server, http proxy, and auth into a single tiny deployable 
+- Allows for build of microservices for handling things like camera and gpio sensors while being able to distribute them to PiZeros running independently. 
+
 ## Technology
 - Rust
 - Rustls
