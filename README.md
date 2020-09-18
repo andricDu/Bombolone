@@ -38,6 +38,48 @@ If cross compiling from AMD64 linux, setup the toolchain properly and then do th
 cargo build --release --target armv7-unknown-linux-gnueabihf
 ```
 
+
+## Running
+Either build and run the binary or you can invoke the cargo command. Bombolone will print out the QR code you can use for pairing. 
+```shell script
+$ cargo run 
+   Compiling bombolone v0.1.0 (/home/baby_cam/Bombolone)
+    Finished dev [unoptimized + debuginfo] target(s) in 11.49s
+     Running `target/debug/bombolone`
+                                                                                       
+                                                                                       
+                                                                                       
+                                                                                       
+            █████████████████████   █████████   ███   █████████████████████            
+            ███               ███   ███   ███         ███               ███            
+            ███   █████████   ███      ████████████   ███   █████████   ███            
+            ███   █████████   ███   █████████   ███   ███   █████████   ███            
+            ███   █████████   ███            ███      ███   █████████   ███            
+            ███               ███      ███   ██████   ███               ███            
+            █████████████████████   ███   ███   ███   █████████████████████            
+                                    ███   █████████                                    
+            ███   ██████   █████████         ██████   ███      ███   ██████            
+            ██████   ███   ███   ███   ██████   ██████      ███   ███   ███            
+                  ███         ██████   ███   ███   █████████         ██████            
+               ███         ███      ███████████████      ███   ███                     
+            ██████         █████████               ███      ███      ██████            
+                                    ██████   █████████      ███                        
+            █████████████████████   ██████   ███      █████████                        
+            ███               ███   ███   ██████   ███         █████████               
+            ███   █████████   ███               ███         ████████████               
+            ███   █████████   ███   █████████   ███   ██████   ███   ███               
+            ███   █████████   ███   ███   █████████            ██████                  
+            ███               ███         ███   ███████████████         ███            
+            █████████████████████   ███      ███████████████   ███                     
+                                                                                       
+                                                                                       
+                                                                                       
+                                                                                       
+[2020-09-18T21:03:19Z INFO  actix_server::builder] Starting 8 workers
+[2020-09-18T21:03:19Z INFO  actix_server::builder] Starting "actix-web-service-192.168.1.7:8443" service on 192.168.1.7:8443
+
+```
+
 ## Configuration
 Bombolone uses dotenv for configuration. 
 
