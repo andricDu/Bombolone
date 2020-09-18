@@ -2,7 +2,7 @@
 Babycam Web Server
 
 ## Design
-This is a web server and http proxy that authenticates and authorizes requests to the mjpg videa stream from the Raspberry Pi Camera. 
+This is a web server and http proxy that authenticates and authorizes requests to the mjpg video stream from the Raspberry Pi Camera. 
 
 Authentication is done via code that is managed in the config and displayed as a QR code for pairing. 
 
