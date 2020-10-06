@@ -1,7 +1,7 @@
 # Bombolone
 Babycam Web Server
 
-![GitHub Workflow Status (branch)](https://img.shields.io/github/workflow/status/andricDu/Bombolone/Rust/master?style=for-the-badge)
+![GitHub Workflow Status (branch)](https://img.shields.io/github/workflow/status/andricDu/Bombolone/Rust/main?style=for-the-badge)
 ![GitHub](https://img.shields.io/github/license/andricDu/Bombolone?style=for-the-badge)
 
 ## Design
