@@ -1,7 +1,8 @@
 # Bombolone
 Babycam Web Server
 
-![Rust](https://github.com/andricDu/Bombolone/workflows/Rust/badge.svg?branch=master)
+![GitHub Workflow Status (branch)](https://img.shields.io/github/workflow/status/andricDu/Bombolone/Rust/master?style=for-the-badge)
+![GitHub](https://img.shields.io/github/license/andricDu/Bombolone?style=for-the-badge)
 
 ## Design
 This is a web server and http proxy that authenticates and authorizes requests to the mjpg video stream from the Raspberry Pi Camera. 
