@@ -1,8 +1,8 @@
 use actix_cors::Cors;
 use actix_files::Files;
-use actix_http::cookie::SameSite;
 use actix_identity::{CookieIdentityPolicy, Identity, IdentityService};
 use actix_web::client::Client;
+use actix_web::cookie::SameSite;
 use actix_web::{middleware, web, App, Error, HttpResponse, HttpServer};
 use bombolone::config::config::get_app_config;
 use bombolone::handler::auth::login;
@@ -72,8 +72,8 @@ async fn main() -> std::io::Result<()> {
                     .name("auth")
                     .path("/")
                     .domain(&config.domain)
-                    .max_age_time(chrono::Duration::days(365))
-                    .same_site(SameSite::None)
+                    .max_age_time(time::Duration::days(365))
+                    .same_site(SameSite::Strict)
                     .secure(false), // this can only be true if you have https
             ))
             .service(web::resource("/login").route(web::post().to(login)))
