@@ -22,6 +22,7 @@ jobs:
         path: |
           ~/.cargo/registry
           ~/.cargo/git
+        key: ${{ runner.os }}-cargo
     - name: Build
       run: cargo build --verbose
     - name: Run tests
